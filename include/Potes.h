@@ -10,18 +10,20 @@ CARTOGRAFÍAS SONORAS
 Honorino García Mayo 2025
 
 Panel Gestión MAPA - PITCH VARIATION - TIME VARIATION - VOLUME
-Potes.h: Lectura Potenciometros - Ajuste y filtrado Señales Potenciometros
+"Potes.h": 
+Lectura Potenciometros - Ajuste y filtrado Señales Potenciometros
 */
 
 #include <Arduino.h>
+#include <OSCMessage.h>
 #include <ResponsiveAnalogRead.h>
 #include "clip.h"
 
 
 //Param Potes
-#define PotVolumen 35
-#define PotTimeVar 33
-#define PotPitchVar 34
+#define PotVolumen 34
+#define PotTimeVar 35
+#define PotPitchVar 33
 #define NumPots 3
 
 
@@ -88,3 +90,16 @@ void Lectura_potenciometros(){
     }
 }
 ////// FIN LECTURA POTENCIOMETROS /////////
+
+/*
+  _____           _                         __ _              _____
+ / ____|         | |                       / _(_)            / ____|
+| |     __ _ _ __| |_ ___   __ _ _ __ __ _| |_ _  __ _ ___  | (___   ___  _ __   ___  _ __ __ _ ___
+| |    / _` | '__| __/ _ \ / _` | '__/ _` |  _| |/ _` / __|  \___ \ / _ \| '_ \ / _ \| '__/ _` / __|
+| |___| (_| | |  | || (_) | (_| | | | (_| | | | | (_| \__ \  ____) | (_) | | | | (_) | | | (_| \__ \
+ \_____\__,_|_|   \__\___/ \__, |_|  \__,_|_| |_|\__,_|___/ |_____/ \___/|_| |_|\___/|_|  \__,_|___/
+                            __/ |
+                           |___/
+
+ Honorino García Mayo 2025
+*/

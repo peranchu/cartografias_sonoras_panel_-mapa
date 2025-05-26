@@ -10,7 +10,8 @@ CARTOGRAFÍAS SONORAS
 Honorino García Mayo 2025
 
 Panel Gestión MAPA - PITCH VARIATION - TIME VARIATION - VOLUME
-Pantalla.h: Gestiona 3 pantallas SSD1306 128x32
+"Pantalla.h":
+Gestiona 3 pantallas SSD1306 128x32
 Multiplexor I2C TCA9548A
 */
 
@@ -18,6 +19,7 @@ Multiplexor I2C TCA9548A
 #include <Wire.h>
 #include <RoxTCA9548A.h>
 #include <U8g2lib.h>
+#include <esp32Utils.h>
 
 // instancia 3 pantallas
 U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C u8g2_1(U8G2_R0);
@@ -59,3 +61,38 @@ void DibujoPantalla_3(int Vo)
     u8g2_3.setCursor(34, 32);
     u8g2_3.print(Vo);
 }
+/////  FIN DIBUJO PANTALLA PRINCIPAL /////////////
+
+// Pantalla Conexión
+void PantallaConexion(String state)
+{
+    mux.select(1);
+    u8g2_2.firstPage();
+    do
+    {
+        u8g2_2.setFont(u8g2_font_streamline_interface_essential_wifi_t);
+        u8g2_2.drawGlyph(0, 26, 0x30);
+
+        u8g2_2.setFont(u8g2_font_roentgen_nbp_tf);
+        u8g2_2.setCursor(34, 10);
+        u8g2_2.print("Conexion:");
+         u8g2_2.setFont(u8g2_font_littlemissloudonbold_te);
+        u8g2_2.setCursor(34, 28);
+        u8g2_2.print(state);
+
+    } while (u8g2_2.nextPage());
+}
+//////// FIN PANTALLA CONEXIÓN ///////
+
+/*
+  _____           _                         __ _              _____
+ / ____|         | |                       / _(_)            / ____|
+| |     __ _ _ __| |_ ___   __ _ _ __ __ _| |_ _  __ _ ___  | (___   ___  _ __   ___  _ __ __ _ ___
+| |    / _` | '__| __/ _ \ / _` | '__/ _` |  _| |/ _` / __|  \___ \ / _ \| '_ \ / _ \| '__/ _` / __|
+| |___| (_| | |  | || (_) | (_| | | | (_| | | | | (_| \__ \  ____) | (_) | | | | (_) | | | (_| \__ \
+ \_____\__,_|_|   \__\___/ \__, |_|  \__,_|_| |_|\__,_|___/ |_____/ \___/|_| |_|\___/|_|  \__,_|___/
+                            __/ |
+                           |___/
+
+ Honorino García Mayo 2025
+*/
