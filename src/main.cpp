@@ -1,8 +1,20 @@
+/*
+              _ _______
+    /\        | |__   __|
+   /  \   _ __| |_ | | ___  ___
+  / /\ \ | '__| __|| |/ _ \/ __|
+ / ____ \| |  | |_ | |  __/ (__
+/_/    \_\_|   \__||_|\___|\___|
+
+CARTOGRAFÍAS SONORAS
+Honorino García Mayo 2025
+
+Panel Gestión MAPA - PITCH VARIATION - TIME VARIATION - VOLUME
+*/
+
 #include <Arduino.h>
 #include "pantalla.h"
 #include "Potes.h"
-
-
 
 void setup()
 {
@@ -18,7 +30,7 @@ void setup()
 
   // Inicia Pantallas
   mux.select(0);  // Puerto 0 Multiplexor I2C
-  u8g2_1.begin(); //
+  u8g2_1.begin(); 
   u8g2_1.clearBuffer();
 
   mux.select(1); // Puerto 1 Multiplexor I2C
@@ -31,17 +43,16 @@ void setup()
   ///////////////////////
   delay(100);
 
-
-  for(int i = 0; i <NumPots; i++){
+  for (int i = 0; i < NumPots; i++)
+  {
     resposivePot[i] = ResponsiveAnalogRead(pinPotes[i], true, snapMultipler);
   }
 }
 
 void loop()
 {
-  //Lectura Potenciometros
+  // Lectura Potenciometros
   Lectura_potenciometros();
-
 
   // Dibujo Pantalla 1
   mux.select(0);
@@ -50,7 +61,6 @@ void loop()
   {
     DibujoPantalla_1(valPotes_scale[0]);
   } while (u8g2_1.nextPage());
-
 
   // Dibujo Pantalla 2
   mux.select(1);

@@ -1,3 +1,18 @@
+/*
+              _ _______
+    /\        | |__   __|
+   /  \   _ __| |_ | | ___  ___
+  / /\ \ | '__| __|| |/ _ \/ __|
+ / ____ \| |  | |_ | |  __/ (__
+/_/    \_\_|   \__||_|\___|\___|
+
+CARTOGRAFÍAS SONORAS
+Honorino García Mayo 2025
+
+Panel Gestión MAPA - PITCH VARIATION - TIME VARIATION - VOLUME
+Potes.h: Lectura Potenciometros - Ajuste y filtrado Señales Potenciometros
+*/
+
 #include <Arduino.h>
 #include <ResponsiveAnalogRead.h>
 #include "clip.h"
