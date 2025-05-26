@@ -1,0 +1,70 @@
+#include <Arduino.h>
+#include "pantalla.h"
+#include "Potes.h"
+
+
+
+void setup()
+{
+  Serial.begin(115200);
+  delay(100);
+
+  analogReadResolution(10);
+  delay(100);
+
+  mux.begin(true);         // Inicia Multiplexor I2C "pantalla.h"
+  mux.setAddress(0, 0x70); // Direccion Miltiplexor i2C
+  delay(100);
+
+  // Inicia Pantallas
+  mux.select(0);  // Puerto 0 Multiplexor I2C
+  u8g2_1.begin(); //
+  u8g2_1.clearBuffer();
+
+  mux.select(1); // Puerto 1 Multiplexor I2C
+  u8g2_2.begin();
+  u8g2_2.clearBuffer();
+
+  mux.select(2); // Puerto 2 Miltiplexor I2C
+  u8g2_3.begin();
+  u8g2_3.clearBuffer();
+  ///////////////////////
+  delay(100);
+
+
+  for(int i = 0; i <NumPots; i++){
+    resposivePot[i] = ResponsiveAnalogRead(pinPotes[i], true, snapMultipler);
+  }
+}
+
+void loop()
+{
+  //Lectura Potenciometros
+  Lectura_potenciometros();
+
+
+  // Dibujo Pantalla 1
+  mux.select(0);
+  u8g2_1.firstPage();
+  do
+  {
+    DibujoPantalla_1(valPotes_scale[0]);
+  } while (u8g2_1.nextPage());
+
+
+  // Dibujo Pantalla 2
+  mux.select(1);
+  u8g2_2.firstPage();
+  do
+  {
+    DibujoPantalla_2(valPotes_scale[1]);
+  } while (u8g2_2.nextPage());
+
+  // Dibujo Pantalla 3
+  mux.select(2);
+  u8g2_3.firstPage();
+  do
+  {
+    DibujoPantalla_3(valPotes_scale[2]);
+  } while (u8g2_3.nextPage());
+}
