@@ -71,8 +71,8 @@ void PantallaInicio()
     u8g2_1.firstPage();
     do
     {
-        u8g2_1.setFont(u8g2_font_streamline_internet_network_t);
-        u8g2_1.drawGlyph(50, 26, 0x30);
+        u8g2_1.setFont(u8g2_font_streamline_interface_essential_audio_t);
+        u8g2_1.drawGlyph(50, 26, 0x35);
 
     } while (u8g2_1.nextPage());
     delay(2000);

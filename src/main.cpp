@@ -45,6 +45,11 @@ void setup()
 
   PantallaInicio();
 
+   u8g2_1.clearBuffer();
+   u8g2_2.clearBuffer();
+   u8g2_3.clearBuffer();
+   delay(100);
+
   ConexionWiFi();
 
   for (int i = 0; i < NumPots; i++)
