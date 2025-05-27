@@ -43,6 +43,8 @@ void setup()
   ///////////////////////
   delay(100);
 
+  PantallaInicio();
+
   ConexionWiFi();
 
   for (int i = 0; i < NumPots; i++)

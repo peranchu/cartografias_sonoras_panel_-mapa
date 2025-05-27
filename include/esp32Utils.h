@@ -38,8 +38,8 @@ void ConexionWiFi()
     WiFi.config(ip, gateway, subnet);
     WiFi.begin(ssid, password);
 
-    Serial.print("iniciado Conexion:\t");
-    Serial.println(ssid);
+    //Serial.print("iniciado Conexion:\t");
+    //Serial.println(ssid);
 
     PantallaConexion(estado[0]); // Pinta en Pantalla el estado de la conexión "pantalla.h"
 
@@ -56,9 +56,9 @@ void WiFiEvent(WiFiEvent_t event)
         // Cuando se conecta
         PantallaConexion(estado[1]);
 
-        Serial.println("Conexion establecida");
-        Serial.print("IP Address:\t");
-        Serial.println(WiFi.localIP());
+        //Serial.println("Conexion establecida");
+        //Serial.print("IP Address:\t");
+        //Serial.println(WiFi.localIP());
 
         Udp.begin(WiFi.localIP(), localPort);
         conexion = true;
@@ -66,7 +66,7 @@ void WiFiEvent(WiFiEvent_t event)
 
     case SYSTEM_EVENT_STA_DISCONNECTED:
         // Cuanndo se Deconecta
-        Serial.println("WiFi desconectada");
+        //Serial.println("WiFi desconectada");
         conexion = false;
 
         PantallaConexion(estado[0]);
