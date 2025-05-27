@@ -60,6 +60,7 @@ void setup()
 
 void loop()
 {
+  //Si existe conexión
   if (conexion)
   {
     // Lectura Potenciometros
@@ -70,7 +71,7 @@ void loop()
     u8g2_1.firstPage();
     do
     {
-      DibujoPantalla_1(valPotes_scale[0]);
+      DibujoPantalla_1(valPotes_scale_map[0]);
     } while (u8g2_1.nextPage());
 
     // Dibujo Pantalla 2
@@ -78,7 +79,7 @@ void loop()
     u8g2_2.firstPage();
     do
     {
-      DibujoPantalla_2(valPotes_scale[1]);
+      DibujoPantalla_2(valPotes_scale_map[1]);
     } while (u8g2_2.nextPage());
 
     // Dibujo Pantalla 3
@@ -86,10 +87,11 @@ void loop()
     u8g2_3.firstPage();
     do
     {
-      DibujoPantalla_3(valPotes_scale[2]);
+      DibujoPantalla_3(valPotes_scale_map[2]);
     } while (u8g2_3.nextPage());
   }
 }
+///////////////////////////////
 
 /*
   _____           _                         __ _              _____

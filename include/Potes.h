@@ -10,7 +10,7 @@ CARTOGRAFÍAS SONORAS
 Honorino García Mayo 2025
 
 Panel Gestión MAPA - PITCH VARIATION - TIME VARIATION - VOLUME
-"Potes.h": 
+"Potes.h":
 Lectura Potenciometros - Ajuste y filtrado Señales Potenciometros
 */
 
@@ -19,22 +19,22 @@ Lectura Potenciometros - Ajuste y filtrado Señales Potenciometros
 #include <ResponsiveAnalogRead.h>
 #include "clip.h"
 
-
-//Param Potes
-#define PotVolumen 34
-#define PotTimeVar 35
+/////// PARÁMETROS POTENCIOMETROS - FILTRADO Lectura ////////
+// Pines y Orden de envío Potenciómetros
 #define PotPitchVar 33
+#define PotTimeVar 35
+#define PotVolumen 34
+
 #define NumPots 3
 
-
 int valPotes[NumPots] = {0};
-int valPotes_scale[NumPots] = {0};  // escalado para pintar en Pantalla
+int valPotes_scale_map[NumPots] = {0}; // escalado para pintar en Pantalla
 
 int readingPot = 0;
 int PotCState[NumPots] = {0};
 int PotPState[NumPots] = {0};
-int pinPotes[NumPots] = {PotVolumen, PotTimeVar, PotPitchVar};
-const char *envioPot[NumPots] = {"/PotVol", "/PotTime", "/PotPitch"};
+int pinPotes[NumPots] = {PotVolumen, PotTimeVar, PotPitchVar};                 // Número de Pin
+const char *envioPot[NumPots] = {"/PotPitchVar", "/PotTimeVar", "/PotVolGen"}; // Nombre para Mensaje OSC
 
 int potVar = 0;
 const int TIMEOUT_POT = 300;
@@ -47,14 +47,16 @@ int pot_min = 0;
 int pot_max = 1023;
 ///////////////////////////////////////////////
 
-//Resposive analog Read
+// Resposive analog Read
 float snapMultipler = 0.01;
 ResponsiveAnalogRead resposivePot[NumPots] = {};
 ///////////////////////////
 
-//Lectura Potenciómetros
-void Lectura_potenciometros(){
-    for (int i = 0; i < NumPots; i++){
+// Lectura Potenciómetros
+void Lectura_potenciometros()
+{
+    for (int i = 0; i < NumPots; i++)
+    {
         readingPot = analogRead(pinPotes[i]);
         resposivePot[i].update(readingPot);
         PotCState[i] = resposivePot[i].getValue();
@@ -63,27 +65,38 @@ void Lectura_potenciometros(){
 
         potVar = abs(PotCState[i] - PotPState[i]);
 
-        if(potVar > varthresholdPot){
+        if (potVar > varthresholdPot)
+        {
             PTimePot[i] = millis();
         }
         timerPot[i] = millis() - PTimePot[i];
 
-        if(timerPot[i] < TIMEOUT_POT){
+        if (timerPot[i] < TIMEOUT_POT)
+        {
             potMoving = true;
         }
-        else{
+        else
+        {
             potMoving = false;
         }
-        if(potMoving == true){
-            valPotes_scale[i] = map(PotCState[i], 0, 1023, 0, 11);
-            valPotes[i] = PotCState[i];
-            Serial.print(i);
-            Serial.print(" Potenciometro: ");
-            Serial.print(PotCState[i]);
+        if (potMoving == true)
+        {
+            //valPotes[i] = PotCState[i];  //Valores en bruto potenciometro 0 - 1023
+            valPotes_scale_map[i] = map(PotCState[i], 0, 1023, 0, 11);  //Escalado valores Potenciometros
+            
+            // Envío Potenciómetros PITCH VARIATION - TIME VARIATION - VOLUME
+            OSCMessage msgPot(envioPot[i]);
+            msgPot.add(valPotes_scale_map[i]);
+            Udp.beginPacket(outIP, outPort);
+            msgPot.send(Udp);
+            Udp.endPacket();
+            msgPot.empty();
 
-            Serial.println();
+            // Serial.print(i);
+            // Serial.print(" Potenciometro: ");
+            // Serial.print(PotCState[i]);
 
-
+            // Serial.println();
 
             PotPState[i] = PotCState[i];
         }
